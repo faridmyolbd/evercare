@@ -13,22 +13,21 @@
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
         }
+        /* 🔵 Evercare Blue Navbar */
         .navbar {
-            background-color: #007bff;
+            background-color: #002f6c;
         }
         .navbar-brand, .nav-link {
             color: white !important;
         }
-        .container {
-            margin-top: 20px;
-        }
+        /* 🔵 Updated Logout Button */
         .logout-btn {
-            background-color: #dc3545;
+            background-color: #00509d;
             color: white;
             border: none;
         }
         .logout-btn:hover {
-            background-color: #bb2d3b;
+            background-color: #003366;
         }
         .card {
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -37,8 +36,8 @@
 </head>
 <body>
 
-{{-- ✅ Hide navbar on CRM page --}}
-@if (!request()->is('crm'))
+{{-- ✅ Hide Navbar on Login, CRM, and Appointment Create Pages --}}
+@if (!request()->is('login') && !request()->is('crm') && !request()->is('appointment/create'))
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand fw-bold" href="{{ route('dashboard') }}">CRM Dashboard</a>
@@ -48,13 +47,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('crm.index') }}">CRM</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('patients.index') }}">Patients List</a>
+                    <a class="nav-link" href="{{ route('appointments.index') }}">Appointments List</a>
                 </li>
                 <li class="nav-item">
                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
