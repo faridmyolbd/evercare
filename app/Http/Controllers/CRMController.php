@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CrmRequest;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Department;
@@ -15,25 +16,10 @@ class CRMController extends Controller
         $divisions = Division::orderBy('name')->get();
         return view('crm.index', compact('departments', 'divisions'));
     }
-    public function store(Request $request)
+    public function store(CrmRequest $request)
     {
-        $request->validate([
-            'uhid' => 'required',
-            'name' => 'required|string|max:255',
-            'age' => 'required|integer|min:0',
-            'gender' => 'required|in:Male,Female',
-            'phone_number' => 'required|string|min:8|max:15|',
-            'alternate_phone' => 'required|string|min:8|max:15',
-            'division' => 'required|string|max:255',
-            'district' => 'required|string|max:255',
-            'thana' => 'required|string|max:255',
-            'area' => 'required|string|max:255',
-            'department_id' => 'required',
-            'agent' => 'required|string|max:255',
-        ]);
-
         // ✅ Insert data correctly
-        Appointment::create([
+        Appointment::updateOrCreate(['phone_number'=>$request->phone_number],[
             'uhid' => $request->uhid,
             'name' => $request->name,
             'age' => $request->age,
@@ -48,6 +34,6 @@ class CRMController extends Controller
             'agent' => $request->agent,
         ]);
 
-        return redirect()->route('crm.index')->with('success', 'Appointment added successfully.');
+        return back()->with('success', 'Appointment added successfully.');
     }
 }
