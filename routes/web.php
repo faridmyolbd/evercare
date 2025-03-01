@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\CRMController;
+use App\Http\Controllers\LocationController;
 
 // ✅ Publicly accessible CRM form
 Route::get('/appointment/create', [CRMController::class, 'index'])->name('crm.index');
@@ -26,6 +27,11 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('appointments', AppointmentController::class);
     Route::get('appointments/export/excel', [AppointmentController::class, 'exportExcel'])->name('appointments.exportExcel');
 });
+
+// ✅ Get districts based on division
+Route::get('/get-districts', [LocationController::class, 'getDistricts'])->name('get.districts');
+Route::get('/get-thanas', [LocationController::class, 'getThanas'])->name('get.thanas');
+
 
 // ✅ Logout Route
 Route::post('/logout', function () {

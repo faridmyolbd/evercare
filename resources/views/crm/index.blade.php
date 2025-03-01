@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="container">
-        <!-- Logo Centered -->
         <div class="text-center mb-4">
             <img src="{{ asset('storage/apollo.png') }}" alt="Evercare Hospital Dhaka" class="img-fluid"
                 style="max-width: 200px;">
@@ -12,7 +11,6 @@
             <div class="alert alert-success text-center">{{ session('success') }}</div>
         @endif
 
-        <!-- Display all errors at top (optional) -->
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -40,113 +38,43 @@
                 <form action="{{ route('crm.store') }}" method="post">
                     @csrf
 
-                    <!-- First Row: UHID, Name, Age -->
+                    <!-- Hidden Inputs for Phone Number & Agent -->
+                    <input type="hidden" name="phone_number" value="{{ request()->get('phone_number') }}">
+                    <input type="hidden" name="agent" value="{{ request()->get('agent') }}">
+
+                    <!-- First Row -->
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <label for="uhid" class="form-label fw-semibold">Appointment UHID</label>
-                            <input type="text" name="uhid" id="uhid" placeholder="UHID"
-                                   class="form-control form-control-sm @error('uhid') is-invalid @enderror"
-                                   value="{{ old('uhid') }}" required>
-                            @error('uhid')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <input type="text" name="phone_number" class="form-control form-control-sm"
-                               value="{{ request()->get('phone_number') }}" hidden>
-                        <input type="text" name="agent" class="form-control form-control-sm"
-                               value="{{ request()->get('agent') }}" hidden>
-                        <div class="col-md-4">
-                            <label for="name" class="form-label fw-semibold">Name</label>
-                            <input type="text" name="name" id="name" placeholder="Appointment Name"
-                                   class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                   value="{{ old('name') }}" required>
-                            @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <label class="form-label fw-semibold">Appointment UHID</label>
+                            <input type="text" name="uhid" class="form-control form-control-sm" value="{{ old('uhid') }}" required>
                         </div>
                         <div class="col-md-4">
-                            <label for="age" class="form-label fw-semibold">Age</label>
-                            <input type="text" name="age" id="age" placeholder="Appointment Age"
-                                   class="form-control form-control-sm @error('age') is-invalid @enderror"
-                                   value="{{ old('age') }}" required>
-                            @error('age')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <label class="form-label fw-semibold">Name</label>
+                            <input type="text" name="name" class="form-control form-control-sm" value="{{ old('name') }}" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Age</label>
+                            <input type="text" name="age" class="form-control form-control-sm" value="{{ old('age') }}" required>
                         </div>
                     </div>
 
-                    <!-- Second Row: Gender, Alternate Phone, Location -->
+                    <!-- Second Row -->
                     <div class="row mb-3">
                         <div class="col-md-4">
-                            <label for="gender" class="form-label fw-semibold">Gender</label>
-                            <select name="gender" id="gender"
-                                    class="form-select form-control-sm @error('gender') is-invalid @enderror" required>
+                            <label class="form-label fw-semibold">Gender</label>
+                            <select name="gender" class="form-select form-control-sm" required>
                                 <option value="">Select Gender</option>
                                 <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
                                 <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
                             </select>
-                            @error('gender')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
                         <div class="col-md-4">
-                            <label for="alternate_phone" class="form-label fw-semibold">Alternate Phone</label>
-                            <input type="text" name="alternate_phone" id="alternate_phone"
-                                   placeholder="Alternate Phone"
-                                   class="form-control form-control-sm @error('alternate_phone') is-invalid @enderror"
-                                   value="{{ old('alternate_phone') }}" required>
-                            @error('alternate_phone')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <label class="form-label fw-semibold">Alternate Phone</label>
+                            <input type="text" name="alternate_phone" class="form-control form-control-sm" value="{{ old('alternate_phone') }}" required>
                         </div>
                         <div class="col-md-4">
-                            <label for="division" class="form-label fw-semibold">Division</label>
-                            <input type="text" name="division" id="division" placeholder="Division"
-                                   class="form-control form-control-sm @error('division') is-invalid @enderror"
-                                   value="{{ old('division') }}" required>
-                            @error('division')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <!-- Third Row: District, Thana, Area -->
-                    <div class="row mb-3">
-                        <div class="col-md-4">
-                            <label for="district" class="form-label fw-semibold">District</label>
-                            <input type="text" name="district" id="district" placeholder="District"
-                                   class="form-control form-control-sm @error('district') is-invalid @enderror"
-                                   value="{{ old('district') }}" required>
-                            @error('district')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-4">
-                            <label for="thana" class="form-label fw-semibold">Thana</label>
-                            <input type="text" name="thana" id="thana" placeholder="Thana"
-                                   class="form-control form-control-sm @error('thana') is-invalid @enderror"
-                                   value="{{ old('thana') }}" required>
-                            @error('thana')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-4">
-                            <label for="area" class="form-label fw-semibold">Area</label>
-                            <input type="text" name="area" id="area" placeholder="Area"
-                                   class="form-control form-control-sm @error('area') is-invalid @enderror"
-                                   value="{{ old('area') }}" required>
-                            @error('area')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <!-- Fourth Row: Department -->
-                    <div class="row mb-4">
-                        <div class="col-md-4">
-                            <label for="department_id" class="form-label fw-semibold">Department</label>
-                            <select name="department_id" id="department_id"
-                                    class="form-select form-control-sm select2 @error('department_id') is-invalid @enderror" required>
+                            <label class="form-label fw-semibold">Department</label>
+                            <select name="department_id" id="department_id" class="form-select form-control-sm select2" required>
                                 <option value="">Select Department</option>
                                 @foreach($departments as $department)
                                     <option value="{{ $department->id }}" {{ old('department_id') == $department->id ? 'selected' : '' }}>
@@ -154,9 +82,44 @@
                                     </option>
                                 @endforeach
                             </select>
-                            @error('department_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Third Row -->
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Division</label>
+                            <select name="division_id" id="division_id" class="form-select form-control-sm" required>
+                                <option value="">Select Division</option>
+                                @foreach($divisions as $division)
+                                    <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                @endforeach
+                            </select>
+                            <input type="hidden" name="division" id="hidden_division">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">District</label>
+                            <select name="district_id" id="district_id" class="form-select form-control-sm" required>
+                                <option value="">Select District</option>
+                            </select>
+                            <input type="hidden" name="district" id="hidden_district">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Thana</label>
+                            <select name="thana_id" id="thana_id" class="form-select form-control-sm" required>
+                                <option value="">Select Thana</option>
+                            </select>
+                            <input type="hidden" name="thana" id="hidden_thana">
+                        </div>
+                    </div>
+
+                    <!-- Fourth Row -->
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <label class="form-label fw-semibold">Area</label>
+                            <input type="text" name="area" class="form-control form-control-sm" value="{{ old('area') }}" required>
                         </div>
                     </div>
 
@@ -167,20 +130,56 @@
                         </button>
                     </div>
                 </form>
+
             </div>
         </div>
     </div>
 
-    @section('scripts')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('#department_id').select2({
-                placeholder: "Select Department",
-                allowClear: true
+@endsection
+
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.select2').select2();
+
+        $('#division_id').change(function () {
+            var divisionName = $("#division_id option:selected").text();
+            $('#hidden_division').val(divisionName);
+            $.ajax({
+                url: "{{ route('get.districts') }}",
+                type: "GET",
+                data: { division_id: $(this).val() },
+                success: function (data) {
+                    $('#district_id').html('<option value="">Select District</option>');
+                    $.each(data, function (key, district) {
+                        $('#district_id').append('<option value="' + district.id + '">' + district.name + '</option>');
+                    });
+                }
             });
         });
-    </script>
-    @endsection
-@endsection
+
+        $('#district_id').change(function () {
+            var districtName = $("#district_id option:selected").text();
+            $('#hidden_district').val(districtName);
+            $.ajax({
+                url: "{{ route('get.thanas') }}",
+                type: "GET",
+                data: { district_id: $(this).val() },
+                success: function (data) {
+                    $('#thana_id').html('<option value="">Select Thana</option>');
+                    $.each(data, function (key, thana) {
+                        $('#thana_id').append('<option value="' + thana.id + '">' + thana.name + '</option>');
+                    });
+                }
+            });
+        });
+
+        $('#thana_id').change(function () {
+            var thanaName = $("#thana_id option:selected").text();
+            $('#hidden_thana').val(thanaName);
+        });
+    });
+</script>
+@endpush

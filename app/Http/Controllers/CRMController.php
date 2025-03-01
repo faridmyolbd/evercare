@@ -5,15 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\Department;
+use App\Models\Division;
 
 class CRMController extends Controller
 {
     public function index()
     {
         $departments = Department::orderBy('name')->get();
-        return view('crm.index', compact('departments'));
+        $divisions = Division::orderBy('name')->get();
+        return view('crm.index', compact('departments', 'divisions'));
     }
-
     public function store(Request $request)
     {
         $request->validate([
